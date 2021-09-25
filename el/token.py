@@ -31,6 +31,11 @@ class TokenType(Enum):
     RPAREN = auto()
     SEMICOLON = auto()
     TRUE = auto()
+    DIVISION = auto()
+    GT = auto()
+    MINUS = auto()
+    MULTIPLICATION = auto()
+    NEGATION = auto()
 
 
 class Token(NamedTuple):
