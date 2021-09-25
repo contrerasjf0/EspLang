@@ -27,7 +27,7 @@ class LexerTest(TestCase):
         self.assertEquals(tokens, expected_tokens)
 
     def test_one_character_operator(self) -> None:
-        source: str = '=+'
+        source: str = '=+-/*<>!'
         lexer: Lexer = Lexer(source)
 
         tokens: List[Token] = []
@@ -149,3 +149,39 @@ class LexerTest(TestCase):
         ]
 
         self.assertEqual(tokens, expected_tokens)
+
+        def test_control_statement(self) -> None:
+        source: str = '''
+            si (5 < 10) {
+                regresa verdadero;
+            } si_no {
+                regresa falso;
+            }
+        '''
+        lexer: Lexer = Lexer(source)
+
+        tokens: List[Token] = []
+        for i in range(17):
+            tokens.append(lexer.next_token())
+
+        expected_tokens: List[Token] = [
+            Token(TokenType.IF, 'si'),
+            Token(TokenType.LPAREN, '('),
+            Token(TokenType.INT, '5'),
+            Token(TokenType.LT, '<'),
+            Token(TokenType.INT, '10'),
+            Token(TokenType.RPAREN, ')'),
+            Token(TokenType.LBRACE, '{'),
+            Token(TokenType.RETURN, 'regresa'),
+            Token(TokenType.TRUE, 'verdadero'),
+            Token(TokenType.SEMICOLON, ';'),
+            Token(TokenType.RBRACE, '}'),
+            Token(TokenType.ELSE, 'si_no'),
+            Token(TokenType.LBRACE, '{'),
+            Token(TokenType.RETURN, 'regresa'),
+            Token(TokenType.FALSE, 'falso'),
+            Token(TokenType.SEMICOLON, ';'),
+            Token(TokenType.RBRACE, '}'),
+        ]
+
+        self.assertEquals(tokens, expected_tokens)
