@@ -80,7 +80,7 @@ class LexerTest(TestCase):
         lexer: Lexer = Lexer(source)
 
         tokens: List[Token] = []
-        for i in range(5):
+        for _ in range(5):
             tokens.append(lexer.next_token())
 
         expected_tokens: List[Token] = [
@@ -92,3 +92,60 @@ class LexerTest(TestCase):
         ]
 
         self.assertEquals(tokens, expected_tokens)
+    
+    def test_function_declaration(self) -> None:
+        source: str = '''
+            variable suma = procedimiento(x, y) {
+                x + y;
+            };
+        '''
+        lexer: Lexer = Lexer(source)
+        
+        tokens: List[Token]
+        for _ in range(16):
+            tokens.append(lexer.next_token())
+        
+        expected_tokens: List[Token] = [
+            Token(TokenType.LET, 'variable'),
+            Token(TokenType.IDENT, 'suma'),
+            Token(TokenType.ASSIGN, '='),
+            Token(TokenType.FUNCTION, 'procedimiento'),
+            Token(TokenType.LPAREN, '('),
+            Token(TokenType.IDENT, 'x'),
+            Token(TokenType.COMMA, ','),
+            Token(TokenType.IDENT, 'y'),
+            Token(TokenType.RPAREN, ')'),
+            Token(TokenType.LBRACE, '{'),
+            Token(TokenType.IDENT, 'x'),
+            Token(TokenType.PLUS, '+'),
+            Token(TokenType.IDENT, 'y'),
+            Token(TokenType.SEMICOLON, ';'),
+            Token(TokenType.RBRACE, '}'),
+            Token(TokenType.SEMICOLON, ';'),
+        ]
+
+        self.assertEqual(tokens, expected_tokens)
+
+    def test_function_call(self) -> None:
+        source: str = 'variable resultado = suma(dos, tres);'
+        lexer: Lexer = Lexer(source)
+
+        tokens: List[Token] = []
+        for _ in range(10):
+            tokens.append(lexer.next_token())
+        
+        expected_tokens: List[Token] = [
+            Token(TokenType.LET, 'variable'),
+            Token(TokenType.IDENT, 'resultado'),
+            Token(TokenType.ASSIGN, '='),
+            Token(TokenType.LET, 'suma'),
+            Token(TokenType.LPAREN, '('),
+            Token(TokenType.LET, 'dos'),
+            Token(TokenType.COMMA, ','),
+            Token(TokenType.LET, 'tres'),
+            Token(TokenType.RPAREN, 'variable'),
+            Token(TokenType.SEMICOLON, ';'),
+
+        ]
+
+        self.assertEqual(tokens, expected_tokens)
