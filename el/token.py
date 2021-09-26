@@ -15,6 +15,7 @@ class TokenType(Enum):
     COMMA = auto()
     ELSE = auto()
     EOF = auto()
+    EQ = auto()
     FALSE = auto()
     FUNCTION = auto()
     IDENT = auto()
@@ -25,6 +26,7 @@ class TokenType(Enum):
     LET = auto()
     LPAREN = auto()
     LT = auto()
+    LE = auto()
     PLUS = auto()
     RBRACE = auto()
     RETURN = auto()
@@ -33,9 +35,11 @@ class TokenType(Enum):
     TRUE = auto()
     DIVISION = auto()
     GT = auto()
+    GE = auto()
     MINUS = auto()
     MULTIPLICATION = auto()
     NEGATION = auto()
+    NOT_EQ = auto()
 
 
 class Token(NamedTuple):
@@ -52,7 +56,7 @@ def lookup_token_type(literal: str) -> TokenType:
         'regresa': TokenType.RETURN,
         'si': TokenType.IF,
         'si_no': TokenType.ELSE,
-        'variable': TokenType.LET
+        'variable': TokenType.LET,
         'verdadero': TokenType.TRUE,
     }
 
