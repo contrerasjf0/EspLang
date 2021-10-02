@@ -1,5 +1,5 @@
-from lpp.lexer import Lexer
-from lpp.token import (
+from el.lexer import Lexer
+from el.token import (
     Token,
     TokenType,
 )

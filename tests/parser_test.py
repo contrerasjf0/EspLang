@@ -1,6 +1,9 @@
 from unittest import TestCase
 
-from el.ast import Program
+from el.ast import (
+  LetStatement,
+  Program
+)
 from el.lexer import Lexer
 from el.parser import Parser
 
@@ -16,3 +19,23 @@ class ParserTest(TestCase):
 
         self.assertIsNotNone(program)
         self.assertIsInstance(program, Program)
+    
+    def test_let_statements(self) -> None:
+        source: str = '''
+            variable x = 5;
+            variable y = 10;
+            variable foo = 20;
+        '''
+        lexer: Lexer = Lexer(source)
+        parser: Parser = Parser(lexer)
+
+        program: Program = parser.parse_program()
+
+        self.assertEqual(len(program.statements), 3)
+
+        for statement in program.statements:
+            self.assertIsInstance(statement, LetStatement)
+            self.assertEqual(statement.token_literal(), 'variable')
+
+
+

@@ -1,5 +1,5 @@
 
-from lpp.repl import start_repl
+from el.repl import start_repl
 
 
 def main() -> None:
