@@ -1,4 +1,7 @@
-from typing import Optional
+from typing import (
+    List,
+    Optional,
+)
 
 from el.ast import (
     Identifier,
@@ -19,6 +22,7 @@ class Parser:
         self._lexer = lexer
         self._current_token: Optional[Token] = None
         self._peek_token: Optional[Token] = None
+        self._errors: List[str] = []
 
         self._advance_tokens()
         self._advance_tokens()
@@ -48,7 +52,16 @@ class Parser:
 
             return True
 
+        self._expected_token_error(token_type)
+
         return False
+
+    def _expected_token_error(self, token_type: TokenType) -> None:
+        assert self._peek_token is not None
+        error = f'The next tokne was expected to be  {token_type} ' + \
+            f'it was got {self._peek_token.token_type}'
+
+        self._errors.append(error)
 
     def _parse_let_statement(self) -> Optional[LetStatement]:
         assert self._current_token is not None
