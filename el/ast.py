@@ -93,4 +93,4 @@ class ExpressionStatement(Statement):
         self.expression = expression
 
     def __str__(self) -> str:
-        return str(self.expression)
+        return f"{str(self.expression)};"
