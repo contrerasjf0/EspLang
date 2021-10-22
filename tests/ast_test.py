@@ -1,7 +1,9 @@
 from unittest import TestCase
 
 from el.ast import (
+    ExpressionStatement,
     Identifier,
+    Integer,
     LetStatement,
     Program,
     ReturnStatement,
@@ -50,3 +52,26 @@ class ASTTest(TestCase):
         program_str = str(program)
 
         self.assertEquals(program_str, 'regresa x;')
+    def test_expression_statement(self) -> None:
+        literal_statement = ExpressionStatement(
+                token=Token(TokenType.IDENT, literal="xyz"),
+                expression=Identifier(
+                    token=Token(TokenType.IDENT, literal="xyz"),
+                    value="xyz"
+                )
+            )
+        integer_statement = ExpressionStatement(
+                token=Token(TokenType.INT, literal="21"),
+                expression=Identifier(
+                    token=Token(TokenType.INT, literal="21"),
+                    value="21"
+                )
+
+            )
+        program: Program = Program(statements=[
+            literal_statement,
+            integer_statement,
+        ])
+
+        program_str = str(program)
+        self.assertEquals(program_str, "xyz;21;")
