@@ -179,3 +179,21 @@ class If(Expression):
 
         return out
 
+
+class Function(Expression):
+
+    def __init__(self,
+                 token: Token,
+                 parameters: List[Identifier] = [],
+                 body: Optional[Block] = None) -> None:
+        super().__init__(token)
+        self.parameters = parameters
+        self.body = body
+
+    def __str__(self) -> str:
+        param_list: List[str] = [str(parameter) for parameter in self.parameters]
+
+        params: str = ', '.join(param_list)
+
+        return f'{self.token_literal()}({params}) {str(self.body)}'
+
